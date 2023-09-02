@@ -10,12 +10,12 @@ nav:
 # Menu 目錄
 menu:
   首页: /
+  归档: /categories
   相册: /gallery
   时光轴: /timeline
   音乐清单: /music
-  电影: /movies/
-  游戏: /games/
-  歌单: /songs/
+  电影: /movies
+  游戏: /games
   # Home: / || fas fa-home
   # Archives: /archives/ || fas fa-archive
   # Tags: /tags/ || fas fa-tags
@@ -846,7 +846,7 @@ note:
 # It may contain bugs and unstable, give feedback when you find the bugs.
 # https://github.com/MoOx/pjax
 pjax:
-  enable: false
+  enable: true
   exclude:
   # - xxxx
   # - xxxx
@@ -855,8 +855,6 @@ pjax:
 aplayerInject:
   enable: true
   per_page: true
-aplayer:
-  meting: true
 # Snackbar (Toast Notification 彈窗)
 # https://github.com/polonel/SnackBar
 # position 彈窗位置
@@ -919,7 +917,7 @@ inject:
   head:
   # - <link rel="stylesheet" href="/xxx.css">
   bottom:
-  # - <script src="xxxx"></script>
+    - '<div class="aplayer no-destroy" data-id="464916877" data-server="netease" data-type="song" data-fixed="true" data-autoplay="true"> </div>'
 
 # CDN
 # Don't modify the following settings unless you know how they work
