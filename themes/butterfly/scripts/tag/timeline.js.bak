@@ -6,7 +6,29 @@
 'use strict'
 
 const timeLineFn = (args, content) => {
-  const tlBlock = /<!--\s*timeline (.*?)\s*-->\n([\w\W\s\S]*?)<!--\s*endtimeline\s*-->/g
+  const yaml = require('js-yaml');
+
+  var split = content.split('\n');
+  let startParse=false
+  let dataYml='';
+  let strContext=''
+  for (let splitKey in split) {
+    if (split[splitKey].trim()==='<!-- timeline'){
+      startParse=true
+    } else if (split[splitKey]==='-->'){
+      startParse=false
+    } else if (startParse){
+      dataYml+=split[splitKey]
+      dataYml+="\n"
+    } else if (split[splitKey].trim()==='<!-- endtimeline -->'){
+      break;
+    }else {
+      strContext+=split[splitKey]
+      dataYml+="\n"
+    }
+  }
+  const data = yaml.load(dataYml);
+
 
   let result = ''
   let color = ''
@@ -17,13 +39,6 @@ const timeLineFn = (args, content) => {
     result += `<div class='timeline-item headline'><div class='timeline-item-title'><div class='item-circle'>${mdContent}</div></div></div>`
   }
 
-  const matches = []
-  let match
-
-  while ((match = tlBlock.exec(content)) !== null) {
-    matches.push(match[1])
-    matches.push(match[2])
-  }
 
   for (let i = 0; i < matches.length; i += 2) {
     const tlChildTitle = hexo.render.renderSync({ text: matches[i], engine: 'markdown' })
