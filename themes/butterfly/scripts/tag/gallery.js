@@ -68,13 +68,9 @@ const galleryGroup = (rgs, content) => {
                   </figure>
                   `
         }
-        result +=`<div><p>${galleryListElement.date}</p><p>${galleryListElement.title}</p><div>${galleryGroupListElementHtml}</div></div>`
+        result +=`<div><span>${galleryListElement.date}：</span><span>${galleryListElement.title}</><div>${galleryGroupListElementHtml}</div></div>`
     }
     return result
-}
-
-const galleryGroupTime = args => {
-    console.log('-------------------\n', args)
 }
 
 hexo.extend.tag.register('gallery', gallery, {ends: true})
