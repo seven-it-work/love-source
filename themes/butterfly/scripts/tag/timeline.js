@@ -24,7 +24,7 @@ const timeLineFn = (args, content) => {
         let tlChildContent = hexo.render.renderSync({text: articleListElement.title, engine: 'markdown'})
         let tlTitleHtml = `<div class='timeline-item-title'><div class='item-circle'>${tlChildTitle}</div></div>`
         if (articleListElement.img){
-            tlChildContent=`<img src="${articleListElement.img}"/>`+tlChildContent
+            tlChildContent=`<img style="flex: 1;max-width: 250px;height: auto;padding-right: 10px;margin: 0" src="${articleListElement.img}"/><p style="flex: 1">${tlChildContent}</p>`
         }
         const tlContentHtml = `<div class='timeline-item-content'>${tlChildContent}</div>`
         result += `<div class='timeline-item'>${tlTitleHtml + tlContentHtml}</div>`
