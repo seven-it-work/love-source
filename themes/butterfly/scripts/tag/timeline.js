@@ -19,7 +19,6 @@ const timeLineFn = (args, content) => {
     }
     for (let articleListKey in articleList) {
         var articleListElement = articleList[articleListKey] || {};
-        console.log(articleListElement)
         const tlChildTitle = hexo.render.renderSync({text: articleListElement.date, engine: 'markdown'})
         let tlChildContent = hexo.render.renderSync({text: articleListElement.title, engine: 'markdown'})
         let tlTitleHtml = `<div class='timeline-item-title'><div class='item-circle'>${tlChildTitle}</div></div>`
