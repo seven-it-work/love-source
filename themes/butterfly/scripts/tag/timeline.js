@@ -24,12 +24,11 @@ const timeLineFn = (args, content) => {
     matches.push(match[1])
     matches.push(match[2])
   }
+  console.log(matches)
 
   for (let i = 0; i < matches.length; i += 2) {
     const tlChildTitle = hexo.render.renderSync({ text: matches[i], engine: 'markdown' })
     const tlChildContent = hexo.render.renderSync({ text: matches[i + 1], engine: 'markdown' })
-    console.log(tlChildTitle)
-    console.log(tlChildContent)
 
     const tlTitleHtml = `<div class='timeline-item-title'><div class='item-circle'>${tlChildTitle}</div></div>`
     const tlContentHtml = `<div class='timeline-item-content'>${tlChildContent}</div>`
