@@ -19,3 +19,24 @@ C/A,/ C/C/E C/zz2|
 w:Rock-y did-nt like that
 {% endscore %}
 
+{% musicGroup %}
+musicGroup:
+  - hrefUrl:
+    img: https://www.loveo.cc/wp-content/uploads/2017/02/card-image.jpg
+    subTitle: Lorem Ipsum
+    author: 周杰伦
+    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam voluptatibus
+  autem consectetur voluptate facere at, omnis ab optio placeat officiis!
+  Animi modi harum enim quia veniam consectetur unde autem inventore.'
+  - hrefUrl:
+    img: https://www.loveo.cc/wp-content/uploads/2017/02/card-image.jpg
+    subTitle: Lorem Ipsum
+    author: 周杰伦
+    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam voluptatibus
+    autem consectetur voluptate facere at, omnis ab optio placeat officiis!
+    Animi modi harum enim quia veniam consectetur unde autem inventore.'
+{% endmusicGroup %}
+
+
+
+
