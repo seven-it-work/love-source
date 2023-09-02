@@ -21,8 +21,11 @@ const timeLineFn = (args, content) => {
         var articleListElement = articleList[articleListKey] || {};
         console.log(articleListElement)
         const tlChildTitle = hexo.render.renderSync({text: articleListElement.date, engine: 'markdown'})
-        const tlChildContent = hexo.render.renderSync({text: articleListElement.title, engine: 'markdown'})
-        const tlTitleHtml = `<div class='timeline-item-title'><div class='item-circle'>${tlChildTitle}</div></div>`
+        let tlChildContent = hexo.render.renderSync({text: articleListElement.title, engine: 'markdown'})
+        let tlTitleHtml = `<div class='timeline-item-title'><div class='item-circle'>${tlChildTitle}</div></div>`
+        if (articleListElement.img){
+            tlTitleHtml=`<img src="${articleListElement.img}"/>`+tlChildContent
+        }
         const tlContentHtml = `<div class='timeline-item-content'>${tlChildContent}</div>`
         result += `<div class='timeline-item'>${tlTitleHtml + tlContentHtml}</div>`
     }
