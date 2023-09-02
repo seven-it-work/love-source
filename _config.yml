@@ -7,8 +7,8 @@ title: Hexo
 subtitle: ''
 description: ''
 keywords:
-author: John Doe
-language: en
+author: 段美女 & 小易易
+language: zh_CN
 timezone: ''
 
 # URL
@@ -107,3 +107,27 @@ deploy:
 aplayer:
   enable: true
   asset_inject: true
+
+
+douban:
+  id: 162448367
+  builtin: false
+  item_per_page: 10
+  meta_max_line: 4
+  customize_layout: page
+  book:
+    path: books/index.html
+    title: 'This is my book title'
+    quote: 'This is my book quote'
+    option:
+  movie:
+    path: movies/index.html
+    title: 'This is my movie title'
+    quote: 'This is my movie quote'
+    option:
+  game:
+    path: games/index.html
+    title: 'This is my game title'
+    quote: 'This is my game quote'
+    option:
+  timeout: 10000
