@@ -8,10 +8,10 @@ copy:
   noSupport: Browser Not Supported
 
 page:
-  articles: Articles
+  articles: 随记
   tag: Tag
   category: Category
-  archives: Archives
+  archives: 时间线
 
 card_post_count: comments
 
@@ -30,7 +30,7 @@ post:
     link: Link
     copyright_notice: Copyright Notice
     copyright_content: 'All articles in this blog are licensed under <a href="%s">%s</a> unless stating additionally.'
-  recommend: Related Articles
+  recommend: 相关随记
   edit: Edited on
 
 search:
@@ -53,13 +53,13 @@ pagination:
 comment: Comment
 
 aside:
-  articles: Articles
+  articles: 随记
   tags: Tags
   categories: Categories
   card_announcement: Announcement
   card_categories: Categories
   card_tags: Tags
-  card_archives: Archives
+  card_archives: 时间线
   card_recent_post: Recent Post
   card_webinfo:
     headline: Info

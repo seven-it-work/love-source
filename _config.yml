@@ -3,9 +3,9 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
-subtitle: ''
-description: ''
+title: 生活博客
+subtitle: '段姐&佳哥'
+description: '记录生活，回忆过去'
 keywords:
 author: 段美女 & 小易易
 language: zh_CN
@@ -131,3 +131,20 @@ douban:
     quote: 'This is my game quote'
     option:
   timeout: 10000
+
+# hexo-butterfly-swiper
+# see https://akilar.top/posts/8e1264d1/
+swiper:
+  enable: true # 开关
+  priority: 5 # 过滤器优先权
+  enable_page: all # 应用页面
+  timemode: date # date/updated
+  layout: # 挂载容器类型
+    type: id
+    name: recent-posts
+    index: 0
+  default_descr:
+  swiper_css: https://unpkg.zhimg.com/hexo-butterfly-swiper/lib/swiper.min.css
+  swiper_js: https://unpkg.zhimg.com/hexo-butterfly-swiper/lib/swiper.min.js
+  custom_css: https://unpkg.zhimg.com/hexo-butterfly-swiper/lib/swiperstyle.css
+  custom_js: https://unpkg.zhimg.com/hexo-butterfly-swiper/lib/swiper_init.js

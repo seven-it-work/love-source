@@ -7,7 +7,6 @@ description: 【可選】頁面描述
 keywords: 【可選】頁面關鍵字
 top_img: https://i.loli.net/2019/12/25/Fze9jchtnyJXMHN.jpg
 cover: https://i.loli.net/2019/12/25/Fze9jchtnyJXMHN.jpg
-type: "tags"
 orderby: random
 order: 1
 categories: 测试

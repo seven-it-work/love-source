@@ -9,24 +9,24 @@ nav:
 
 # Menu 目錄
 menu:
-  首页: /
-  随记:
-    时间轴: /archives
-    分类: /categories
-    重要时刻: /timeline
-    标签: /tags/
-  生活清单:
-    相册清单: /gallery
-    音乐清单: /music
-    电影清单: /movies
-    游戏清单: /games
-    书单: /books
-  关于我们: /about/
+  首页: / || fas fa-home
+  随记||fas fa-list:
+    时间轴: /archives/ || fas fa-archive
+    分类: /categories/ || fas fa-folder-open
+    重要时刻: /timeline/ || iconfont icon-shijianzhou
+    标签: /tags/ || fas fa-tags
+  生活清单||iconfont icon-24gl-clipboardChecklist:
+    相册清单: /gallery/ || fas fa-images
+    音乐清单: /music/ || fas fa-music
+    电影清单: /movies/ || fas fa-video
+    游戏清单: /games/ || iconfont icon-youxi
+    书单: /books/ || iconfont icon-ziliaoku
+  关于我们: /about/ || fas fa-heart
 
 # Code Blocks (代碼相關)
 # --------------------------------------
 
-highlight_theme: mac #  darker / pale night / light / ocean / mac / mac light / false
+highlight_theme: light #  darker / pale night / light / ocean / mac / mac light / false
 highlight_copy: true # copy button
 highlight_lang: true # show the code language
 highlight_shrink: false # true: shrink the code blocks / false: expand the code blocks | none: expand code blocks and hide the button
@@ -55,13 +55,13 @@ avatar:
 disable_top_img: false
 
 # The banner image of home page
-index_img:
+index_img: /img/wedding/1.jpg
 
 # If the banner of page not setting, it will show the top_img
-default_top_img:
+default_top_img: /img/wedding/1.jpg
 
 # The banner image of archive page
-archive_img:
+archive_img: /img/wedding/1.jpg
 
 # If the banner of tag page not setting, it will show the top_img
 # note: tag page, not tags page (子標籤頁面的 top_img)
@@ -759,13 +759,13 @@ subtitle:
     #   source: false 關閉調用
     #   source: 1  調用一言網的一句話（簡體） https://hitokoto.cn/
     #   source: 2  調用一句網（簡體） https://yijuzhan.com/
-    source: 3  調用今日詩詞（簡體） https://www.jinrishici.com/
+#    source: 3  調用今日詩詞（簡體） https://www.jinrishici.com/
   # subtitle 會先顯示 source , 再顯示 sub 的內容
-  source: true
+  source: false
   # 如果關閉打字效果，subtitle 只會顯示 sub 的第一行文字
   sub:
-    - 欢迎来到 小段段 & 小易易 的生活博客
-    - Welcome to the Duan & Yi Life blog
+    - 欢迎来到 小段段  小易易 的生活博客
+    - Welcome to the Duan  Yi Life blog
 
 # Loading Animation (加載動畫)
 preloader:
@@ -912,7 +912,7 @@ css_prefix: true
 # 插入代码到头部 </head> 之前 和 底部 </body> 之前
 inject:
   head:
-  # - <link rel="stylesheet" href="/xxx.css">
+   - <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4235380_o5xs1v32ql.css">
   bottom:
     - '<div class="aplayer no-destroy" data-id="464916877" data-server="netease" data-type="song" data-fixed="true" data-autoplay="true"> </div>'
 
