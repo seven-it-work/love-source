@@ -1,5 +1,5 @@
 ---
-title: about
+title: 我们的家庭成员
 
 date: 2023-09-03 08:15:26
 ---
@@ -133,7 +133,6 @@ date: 2023-09-03 08:15:26
     margin: 1.5rem auto 3rem;
     max-width: 600px;
     color: #999;
-    font-family: MV Boli;
   }
 
 </style>

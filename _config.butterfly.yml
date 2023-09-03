@@ -10,23 +10,23 @@ nav:
 # Menu 目錄
 menu:
   首页: /
-  归档: /categories
-  相册: /gallery
-  时光轴: /timeline
-  音乐清单: /music
-  电影: /movies
-  游戏: /games
-  书单: /books
-  Archives: /archives/
-  Tags: /tags/
-  Categories: /categories/
-  Link: /link/
+  随记:
+    时间轴: /archives
+    分类: /categories
+    重要时刻: /timeline
+    标签: /tags/
+  生活清单:
+    相册清单: /gallery
+    音乐清单: /music
+    电影清单: /movies
+    游戏清单: /games
+    书单: /books
   关于我们: /about/
 
 # Code Blocks (代碼相關)
 # --------------------------------------
 
-highlight_theme: light #  darker / pale night / light / ocean / mac / mac light / false
+highlight_theme: mac #  darker / pale night / light / ocean / mac / mac light / false
 highlight_copy: true # copy button
 highlight_lang: true # show the code language
 highlight_shrink: false # true: shrink the code blocks / false: expand the code blocks | none: expand code blocks and hide the button
@@ -764,8 +764,8 @@ subtitle:
   source: true
   # 如果關閉打字效果，subtitle 只會顯示 sub 的第一行文字
   sub:
-    - 今日事&#44;今日毕
-    - Never put off till tomorrow what you can do today
+    - 欢迎来到 小段段 & 小易易 的生活博客
+    - Welcome to the Duan & Yi Life blog
 
 # Loading Animation (加載動畫)
 preloader:
