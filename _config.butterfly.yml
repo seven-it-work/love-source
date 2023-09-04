@@ -642,10 +642,10 @@ tag_ui: # 留空或 index
 # Website Background (設置網站背景)
 # can set it to color or image (可設置圖片 或者 顔色)
 # The formal of image: url(http://xxxxxx.com/xxx.jpg)
-background:
+background: url(/img/wedding/1.jpg)
 
 # Footer Background
-footer_bg: false
+footer_bg: transparent
 
 # Add mask to header or footer (为 header 或 footer 添加黑色半透遮罩)
 mask:
@@ -912,9 +912,14 @@ css_prefix: true
 # 插入代码到头部 </head> 之前 和 底部 </body> 之前
 inject:
   head:
+   - <link rel="stylesheet" href="/css/modify.css">
    - <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4235380_o5xs1v32ql.css">
   bottom:
     - '<div class="aplayer no-destroy" data-id="464916877" data-server="netease" data-type="song" data-fixed="true" data-autoplay="true"> </div>'
+#    冒泡背景
+    - <script defer src="https://cdn.jsdelivr.net/combine/npm/jquery@latest/dist/jquery.min.js,gh/weilining/jsdelivr/jquery/circlemagic/circlemagic.min.js,gh/weilining/jsdelivr@latest/jquery/circlemagic/butterflycirclemagic.js"></script>
+#    樱花
+    - <script src="/js/cherryBlossoms.js"></script>
 
 # CDN
 # Don't modify the following settings unless you know how they work
