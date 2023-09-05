@@ -148,3 +148,22 @@ swiper:
   swiper_js: https://unpkg.zhimg.com/hexo-butterfly-swiper/lib/swiper.min.js
   custom_css: https://unpkg.zhimg.com/hexo-butterfly-swiper/lib/swiperstyle.css
   custom_js: https://unpkg.zhimg.com/hexo-butterfly-swiper/lib/swiper_init.js
+
+# electric_clock
+# see https://akilar.top/posts/4e39cf4a/
+electric_clock:
+  enable: true # 开关
+  priority: 5 #过滤器优先权
+  enable_page: all # 应用页面
+  exclude:
+  # - /posts/
+  # - /about/
+  layout: # 挂载容器类型
+    type: class
+    name: sticky_layout
+    index: 0
+  loading: /img/loading.gif #加载动画自定义
+  clock_js: /js/clock.js
+  clock_css: /css/clock.css
+  weather_city_zh: 成都
+  weather_city_en: ChengDu
