@@ -11,17 +11,16 @@ function setWithExpires(key, value, expires) {
     const date = new Date();
     date.setTime(date.getTime() + expires);
     document.cookie = `${key}=${encodeURI(value)};expires=${date.toGMTString()}`;
-    window.localStorage.setItem(key, encodeURI(value));
+    // window.localStorage.setItem(key, value);
 }
 
 // 获取数据
 function getWithExpires(key) {
-    const value = window.localStorage.getItem(key);
-    const arr = document.cookie.match(new RegExp(`(^| ){key}=([^;]*)(;|$)`));
+    // const value = window.localStorage.getItem(key);
+    const arr = document.cookie.match(new RegExp(`(^| )${key}=([^;]*)(;|$)`));
+    debugger
     if (arr) {
         return decodeURI(arr[2]);
-    } else {
-        return value;
     }
 }
 // 缓存

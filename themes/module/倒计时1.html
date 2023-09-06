@@ -13,7 +13,7 @@
 
     .countDown1container > h1 {
         font-weight: normal;
-        letter-spacing: .125rem;
+        letter-spacing: .125vw;
         text-transform: uppercase;
     }
 
@@ -27,17 +27,17 @@
 
     .countDown1ul > li span {
         display: block;
-        font-size: 4.5rem;
+        font-size: 4.5vw;
     }
 
     .countDown1ul > .emoji {
         display: none;
-        padding: 1rem;
+        padding: 1vw;
     }
 
     .countDown1ul > .emoji span {
-        font-size: 4rem;
-        padding: 0 .5rem;
+        font-size: 4vw;
+        padding: 0 .5vw;
     }
 </style>
 <body>
@@ -59,6 +59,29 @@
 </div>
 </body>
 <script>
+    const dataList = [
+        {
+            text: '3',
+            year: 2023,
+            dateInfo: '09-06'
+        },
+        {
+            text: '1',
+            year: 2022,
+            dateInfo: '01-06'
+        },
+        {
+            text: '2',
+            year: 2023,
+            dateInfo: '07-06'
+        },
+        {
+            text: '2',
+            year: 2023,
+            dateInfo: '09-05'
+        },
+    ]
+
     (function () {
         const second = 1000,
             minute = second * 60,
@@ -66,7 +89,7 @@
             day = hour * 24;
 
         //I'm adding this section so I don't have to keep updating this pen every year :-)
-        //remove this if you don't need it
+        //vwove this if you don't need it
         let today = new Date(),
             dd = String(today.getDate()).padStart(2, "0"),
             mm = String(today.getMonth() + 1).padStart(2, "0"),
