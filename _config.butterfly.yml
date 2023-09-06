@@ -21,6 +21,7 @@ menu:
     电影清单: /movies/ || fas fa-video
     游戏清单: /games/ || iconfont icon-youxi
     书单: /books/ || iconfont icon-ziliaoku
+  纪念日: /red-letter-day/ || fas fa-heart
   关于我们: /about/ || fas fa-heart
 
 # Code Blocks (代碼相關)
