@@ -18,7 +18,6 @@ function setWithExpires(key, value, expires) {
 function getWithExpires(key) {
     // const value = window.localStorage.getItem(key);
     const arr = document.cookie.match(new RegExp(`(^| )${key}=([^;]*)(;|$)`));
-    debugger
     if (arr) {
         return decodeURI(arr[2]);
     }

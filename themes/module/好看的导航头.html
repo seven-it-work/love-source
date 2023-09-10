@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="https://unpkg.co/gsap@3/dist/gsap.min.js"></script>
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+    }
+
+    canvas#gooey-canvas,
+    svg#gooey-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+    }
+
+    svg#gooey-overlay .menu-item {
+        cursor: pointer;
+    }
+
+    svg#gooey-overlay .menu-item use {
+        stroke: #000066;
+    }
+
+    svg#gooey-overlay .menu-item:hover use {
+        stroke: hotpink;
+    }
+</style>
+<body>
+
+<div class="wrapper">
+    <canvas id="gooey-canvas"></canvas>
+    <svg id="gooey-overlay" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="6">
+        <defs>
+            <symbol id="icon-user" viewBox="0 0 100 100">
+                <g>
+                    <circle cx="46.3" cy="30.5" r="20.7"/>
+                    <path d="M70.4,58.4a31.8,31.8,0,0,1,7.8,21"/>
+                    <path d="M14.3,79.4a31.6,31.6,0,0,1,7.8-20.9"/>
+                </g>
+            </symbol>
+            <symbol id="icon-settings" viewBox="0 0 100 100">
+                <g>
+                    <path d="M71.5,51.3a28.4,28.4,0,0,0,.5-5.1,25.7,25.7,0,0,0-.8-6.2l8.9-5.9a35.4,35.4,0,0,0-10-14.9l-8.9,6a24,24,0,0,0-6.1-3.3V11.2a38.2,38.2,0,0,0-9-1.1,36.8,36.8,0,0,0-8.9,1.1V21.9a27.3,27.3,0,0,0-6.7,3.7l-9-5.7A35.5,35.5,0,0,0,11.8,35l9.1,5.6a26.9,26.9,0,0,0,0,11.3l-8.9,6a35,35,0,0,0,9.8,14.9l8.8-5.9a26.4,26.4,0,0,0,6.6,3.6V81.2a36.8,36.8,0,0,0,8.9,1.1,38.2,38.2,0,0,0,9-1.1V70.5a27,27,0,0,0,7-4l9.1,5.7A37.5,37.5,0,0,0,80.6,57ZM46.2,61.5A15.3,15.3,0,1,1,61.5,46.2,15.4,15.4,0,0,1,46.2,61.5Z"/>
+                </g>
+            </symbol>
+            <symbol id="icon-msg" viewBox="0 0 100 100">
+                <g>
+                    <path d="M81.9,43.2c0,12.9-16,23.4-35.7,23.4-6.3,0-10-.4-15.2-2.2-1.8-.7-17.5,9.1-19.1,8.2s6-14.9,3.9-17.2a17.4,17.4,0,0,1-5.3-12.2c0-13,16-23.5,35.7-23.5S81.9,30.2,81.9,43.2Z"/>
+                </g>
+            </symbol>
+        </defs>
+        <g class="balls">
+        </g>
+    </svg>
+</div>
+
+<script type="x-shader/x-fragment" id="vertShader">
+    precision mediump float;
+
+    varying vec2 vUv;
+    attribute vec2 a_position;
+
+    void main() {
+        vUv = .5 * (a_position + 1.);
+        gl_Position = vec4(a_position, 0., 1.);
+    }
+</script>
+
+<script type="x-shader/x-fragment" id="fragShader">
+    precision mediump float;
+
+    varying vec2 vUv;
+    uniform float u_time;
+    uniform float u_ratio;
+    uniform float u_max_y;
+    uniform vec2 u_pointer;
+    uniform float u_click_t;
+    uniform vec3 u_drops_pos_x;
+    uniform vec3 u_drops_pos_y;
+
+    vec3 permute(vec3 x) { return mod(((x*34.0)+1.0)*x, 289.0); }
+    float snoise(vec2 v){
+        const vec4 C = vec4(0.211324865405187, 0.366025403784439,
+        -0.577350269189626, 0.024390243902439);
+        vec2 i = floor(v + dot(v, C.yy));
+        vec2 x0 = v - i + dot(i, C.xx);
+        vec2 i1;
+        i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+        vec4 x12 = x0.xyxy + C.xxzz;
+        x12.xy -= i1;
+        i = mod(i, 289.0);
+        vec3 p = permute(permute(i.y + vec3(0.0, i1.y, 1.0))
+        + i.x + vec3(0.0, i1.x, 1.0));
+        vec3 m = max(0.5 - vec3(dot(x0, x0), dot(x12.xy, x12.xy),
+        dot(x12.zw, x12.zw)), 0.0);
+        m = m*m;
+        m = m*m;
+        vec3 x = 2.0 * fract(p * C.www) - 1.0;
+        vec3 h = abs(x) - 0.5;
+        vec3 ox = floor(x + 0.5);
+        vec3 a0 = x - ox;
+        m *= 1.79284291400159 - 0.85373472095314 * (a0*a0 + h*h);
+        vec3 g;
+        g.x = a0.x * x0.x + h.x * x0.y;
+        g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+        return 130.0 * dot(m, g);
+    }
+
+    float get_point_shape(vec2 uv, vec2 pos) {
+        float width = 1.9 * (u_drops_pos_x[2] - u_drops_pos_x[0]) / 3.;
+
+        float point_uv_y = (1. / pos.y - (1. / pos.y) * (uv.y - .05));
+
+        vec2 dist = vec2(uv.x * u_ratio, uv.y) - vec2(pos.x * u_ratio, 1. - pos.y);
+        float l = length(dist);
+        l = max(0., l);
+        l /= u_max_y;
+        l *= u_ratio;
+        width += .1 * pow(l, -.7);
+
+        float c = smoothstep(pos.x - .5 * width, pos.x, uv.x);
+        c *= smoothstep(pos.x + .5 * width, pos.x, uv.x);
+        c *= smoothstep(1. - pos.y - .5 * u_ratio * width, 1. - pos.y, uv.y);
+
+        c = pow(c, 10.);
+
+        return c;
+    }
+
+
+    void main() {
+        vec2 uv = vUv;
+        uv.y -= .03;
+
+        float noise_speed = .25;
+        float width = .2;
+        float shape = 0.;
+
+        float mid_shape = smoothstep(0. - .7 * width, u_drops_pos_x[1] - u_drops_pos_x[0], uv.x - u_drops_pos_x[0]) - smoothstep(u_drops_pos_x[1], u_drops_pos_x[2] + .5 * width, uv.x);
+        mid_shape = pow(mid_shape, 1.5);
+        mid_shape *= 2.6 * (1. - (1. - uv.y) / max(u_drops_pos_y[0], max(u_drops_pos_y[1], u_drops_pos_x[2])));
+
+        float top_shape = (1. - (1. - uv.y) / u_max_y);
+        top_shape = pow(top_shape, 3.);
+        vec2 noise_uv = uv;
+        noise_uv.x /= width;
+        noise_uv.x *= .7;
+        noise_uv.y += noise_speed * u_time;
+        float noise = snoise(noise_uv);
+        top_shape -= .2 * noise;
+
+        noise_uv.x *= .1;
+        noise = snoise(noise_uv);
+        top_shape -= .2 * noise;
+
+        shape += .5 * mid_shape;
+        shape += top_shape;
+        shape = 5. * pow(shape, 7.);
+
+        for (int i = 0; i < 3; i++) {
+            float column = get_point_shape(vUv, vec2(u_drops_pos_x[i], u_drops_pos_y[i]));
+            shape += column;
+        }
+
+        float border_limit = .4;
+        float border = smoothstep(border_limit, border_limit + .1, shape);
+        float contour = border - smoothstep(border_limit, border_limit + .25, shape);
+
+        shape = clamp(shape, 0., 2.);
+        shape = .4 + pow(shape, .2);
+
+        vec3 purple = vec3(0.780, 0.474, 0.816);
+        vec3 yellow = vec3(0.996, 0.675, 0.368);
+        vec3 blue = vec3(0.296, 0.753, 0.784);
+
+        vec3 color = mix(blue, purple, (.5 + .1 * sin(u_time)) * shape);
+
+        vec2 p = uv - u_pointer;
+        p.x *= u_ratio;
+        float pl = (1. - min(1., length(p)));
+        pl = pow(pl, 10.);
+        pl *= (1. + u_click_t);
+        pl += .4 * noise;
+        color = mix(color, yellow, pl + .1 * shape);
+
+        color -= .2 * contour;
+        color += (.2 * pl) * contour;
+
+        color *= shape;
+
+        gl_FragColor = vec4(color, border);
+    }
+</script>
+<script>
+    const canvasEl = document.querySelector("#gooey-canvas");
+    const svgEl = document.querySelector("#gooey-overlay");
+    const svgBallsEl = svgEl.querySelector(".balls");
+
+    const params = {
+        pageContentMaxWidth: 800,
+        btnPixelRadius: 43,
+        widthPixel: 300,
+        heightPixel: 250,
+        clickPower: 0
+    }
+
+    const buttons = [
+        {name: "user", pos: {x: 0, y: 0}},
+        {name: "settings", pos: {x: 0, y: 0}},
+        {name: "msg", pos: {x: 0, y: 0}},
+    ]
+
+    const pointer = {
+        x: 0, y: 0,
+        tx: 0, ty: 0,
+    }
+
+    createOverlay();
+    resizeOverlay();
+
+    const uniforms = {
+        timeLocation: null,
+        dropsPosYLocation: null,
+        dropsPosXLocation: null,
+        pointerLocation: null,
+        ratioLocation: null,
+        clickLocation: null,
+    }
+    const gl = initShader();
+    resizeCanvas();
+
+    setupAnimation();
+
+    window.addEventListener("resize", () => {
+        resizeOverlay();
+        resizeCanvas();
+    });
+
+    gsap.ticker.add(onTick);
+
+    function onTick(t) {
+        pointer.x += (pointer.tx - pointer.x) * .25;
+        pointer.y += (pointer.ty - pointer.y) * .25;
+
+        buttons.forEach(b => {
+            gsap.set(b.el, {
+                x: b.pos.x,
+                y: b.pos.y
+            });
+        });
+        renderShader(t);
+    }
+
+    // -----------------------------------------
+    // Canvas (Shader) part
+
+    function initShader() {
+        const vsSource = document.getElementById("vertShader").innerHTML;
+        const fsSource = document.getElementById("fragShader").innerHTML;
+
+        const gl = canvasEl.getContext("webgl") || canvasEl.getContext("experimental-webgl");
+
+        if (!gl) {
+            alert("WebGL is not supported by your browser.");
+        }
+
+        function createShader(gl, sourceCode, type) {
+            const shader = gl.createShader(type);
+            gl.shaderSource(shader, sourceCode);
+            gl.compileShader(shader);
+
+            if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+                console.error("An error occurred compiling the shaders: " + gl.getShaderInfoLog(shader));
+                gl.deleteShader(shader);
+                return null;
+            }
+
+            return shader;
+        }
+
+        const vertexShader = createShader(gl, vsSource, gl.VERTEX_SHADER);
+        const fragmentShader = createShader(gl, fsSource, gl.FRAGMENT_SHADER);
+
+        function createShaderProgram(gl, vertexShader, fragmentShader) {
+            const program = gl.createProgram();
+            gl.attachShader(program, vertexShader);
+            gl.attachShader(program, fragmentShader);
+            gl.linkProgram(program);
+
+            if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+                console.error("Unable to initialize the shader program: " + gl.getProgramInfoLog(program));
+                return null;
+            }
+
+            return program;
+        }
+
+        const shaderProgram = createShaderProgram(gl, vertexShader, fragmentShader);
+        const vertices = new Float32Array([-1., -1., 1., -1., -1., 1., 1., 1.]);
+
+        const vertexBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+
+        gl.useProgram(shaderProgram);
+
+        const positionLocation = gl.getAttribLocation(shaderProgram, "a_position");
+        gl.enableVertexAttribArray(positionLocation);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+        gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+
+        uniforms.timeLocation = gl.getUniformLocation(shaderProgram, "u_time");
+        uniforms.dropsPosXLocation = gl.getUniformLocation(shaderProgram, "u_drops_pos_x");
+        uniforms.dropsPosYLocation = gl.getUniformLocation(shaderProgram, "u_drops_pos_y");
+        uniforms.ratioLocation = gl.getUniformLocation(shaderProgram, "u_ratio");
+        uniforms.pointerLocation = gl.getUniformLocation(shaderProgram, "u_pointer");
+        uniforms.graphicVertRatioLocation = gl.getUniformLocation(shaderProgram, "u_max_y");
+        uniforms.clickLocation = gl.getUniformLocation(shaderProgram, "u_click_t");
+
+        return gl;
+    }
+
+    function resizeCanvas() {
+        canvasEl.width = window.innerWidth;
+        canvasEl.height = window.innerHeight;
+        gl.uniform1f(uniforms.ratioLocation, window.innerWidth / window.innerHeight);
+        gl.uniform1f(uniforms.graphicVertRatioLocation, params.heightPixel / window.innerHeight);
+        gl.viewport(0, 0, canvasEl.width, canvasEl.height);
+        console.log(params.heightPixel / window.innerHeight)
+
+    }
+
+
+    function renderShader(t) {
+
+        gl.uniform1f(uniforms.timeLocation, t);
+
+        const getShrX = (btn) => {
+            return (params.xOffset + btn.pos.x) / window.innerWidth;
+        }
+        const getShrY = (btn) => {
+            return btn.pos.y / window.innerHeight;
+        }
+
+        gl.uniform3f(uniforms.dropsPosXLocation, getShrX(buttons[0]), getShrX(buttons[1]), getShrX(buttons[2]));
+        gl.uniform3f(uniforms.dropsPosYLocation, getShrY(buttons[0]), getShrY(buttons[1]), getShrY(buttons[2]));
+
+        gl.clearColor(0.0, 0.0, 0.0, 1.0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    }
+
+
+    // -----------------------------------------
+    // SVG (Clickable overlay) part
+
+    function createOverlay() {
+        buttons.forEach(b => {
+            const gEl = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            svgBallsEl.appendChild(gEl);
+            const circleEl = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            circleEl.setAttribute("cx", "0");
+            circleEl.setAttribute("cy", "0");
+            circleEl.setAttribute("r", "" + params.btnPixelRadius);
+            gsap.set(circleEl, {
+                attr: {
+                    fill: "transparent",
+                }
+            })
+            gEl.appendChild(circleEl);
+
+            const iconEl = document.createElementNS("http://www.w3.org/2000/svg", "use");
+            iconEl.setAttribute("href", "#icon-" + b.name);
+            iconEl.setAttribute("x", -.5 * params.btnPixelRadius);
+            iconEl.setAttribute("y", -.5 * params.btnPixelRadius);
+            iconEl.setAttribute("width", params.btnPixelRadius);
+            iconEl.setAttribute("height", params.btnPixelRadius);
+            gEl.appendChild(iconEl);
+
+            gEl.classList.add("menu-item");
+            b.el = gEl;
+        })
+    }
+
+    function resizeOverlay() {
+        gsap.set(svgEl, {
+            attr: {
+                "viewBox": "0 0 " + window.innerWidth + " " + window.innerHeight
+            }
+        })
+
+        params.xOffset = window.innerWidth - params.widthPixel;
+        if (window.innerWidth > params.pageContentMaxWidth) {
+            params.xOffset -= (.5 * (window.innerWidth - params.pageContentMaxWidth))
+        }
+        gsap.set(svgBallsEl, {
+            x: params.xOffset
+        })
+    }
+
+
+    function setupAnimation() {
+        buttons.forEach((b, bIdx) => {
+            b.yLoop = gsap.fromTo(b.pos, {
+                y: params.btnPixelRadius + (bIdx === 1 ? 4 : 2) * params.btnPixelRadius,
+            }, {
+                duration: 2,
+                y: params.heightPixel - (bIdx === 0 ? 2 : 0) * params.btnPixelRadius,
+                ease: "sine.inOut",
+                repeat: -1,
+                yoyo: true
+            })
+                .progress(bIdx / buttons.length + .2 * Math.random());
+
+
+            b.xLoop = gsap.fromTo(b.pos, {
+                x: (bIdx / buttons.length) * params.widthPixel
+            }, {
+                duration: 2 + Math.random(),
+                x: "+=" + (bIdx > 0 ? (-.12) : (.1)) * params.widthPixel,
+                ease: "sine.inOut",
+                repeat: -1,
+                yoyo: true
+            })
+                .progress(Math.random());
+
+
+            b.el.onclick = function () {
+                gsap.timeline({
+                    onUpdate: () => {
+                        gl.uniform1f(uniforms.clickLocation, params.clickPower);
+                    }
+                })
+                    .to(params, {
+                        duration: .1,
+                        clickPower: .2,
+                        ease: "power1.inOut"
+                    }, 0)
+                    .to(params, {
+                        duration: .3,
+                        clickPower: 0,
+                        ease: "back(2).out"
+                    }, ">")
+                    .to(b.el, {
+                        duration: .1,
+                        opacity: .1,
+                        ease: "power1.inOut"
+                    }, 0)
+                    .to(b.el, {
+                        duration: .3,
+                        opacity: 1,
+                        ease: "power1.inOut"
+                    }, ">")
+            }
+        })
+
+        const maxDistance = 4 * params.btnPixelRadius;
+        window.addEventListener("mousemove", e => {
+            pointer.tx = e.offsetX;
+            pointer.ty = e.offsetY;
+            gl.uniform2f(uniforms.pointerLocation, pointer.x / window.innerWidth, 1. - pointer.y / window.innerHeight);
+
+            buttons.forEach(b => {
+                const circleX = params.xOffset + gsap.getProperty(b.el, "x");
+                const circleY = gsap.getProperty(b.el, "y");
+
+                b.distance = Math.sqrt(Math.pow(pointer.tx - circleX, 2) + Math.pow(pointer.ty - circleY, 2)) / maxDistance;
+                b.distance = Math.min(1, b.distance);
+
+                const timeScale = 1.2 * Math.pow(b.distance, 2.);
+
+                gsap.set(b.xLoop, {
+                    timeScale: timeScale
+                })
+                gsap.set(b.yLoop, {
+                    timeScale: timeScale
+                })
+            });
+        });
+    }
+</script>
+</body>
+</html>
