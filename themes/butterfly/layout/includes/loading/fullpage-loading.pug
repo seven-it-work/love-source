@@ -68,7 +68,11 @@ script.
     }
 
     preloader.initLoading()
-    window.addEventListener('load',() => { preloader.endLoading() })
+    // 等待加载
+    setTimeout(()=>{
+        preloader.endLoading()
+    }, 3000)
+
 
     if (!{theme.pjax && theme.pjax.enable}) {
       document.addEventListener('pjax:send', () => { preloader.initLoading() })
