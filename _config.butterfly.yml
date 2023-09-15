@@ -21,8 +21,8 @@ menu:
     电影清单: /movies/ || fas fa-video
     游戏清单: /games/ || iconfont icon-youxi
     书单: /books/ || iconfont icon-ziliaoku
-  纪念日: /red-letter-day/ || fas fa-heart
-  足迹: /footprintMap/ || fas fa-heart
+  纪念日: /red-letter-day/ || iconfont icon-jinianri
+  足迹: /footprintMap/ || iconfont icon-qiandaozuji
   关于我们: /about/ || fas fa-heart
 
 # Code Blocks (代碼相關)
@@ -915,7 +915,7 @@ css_prefix: true
 inject:
   head:
    - <link rel="stylesheet" href="/css/modify.css">
-   - <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4235380_o5xs1v32ql.css">
+   - <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4235380_m67l5okd3yh.css">
   bottom:
     - '<div class="aplayer no-destroy" data-id="464916877" data-server="netease" data-type="song" data-fixed="true" data-autoplay="true"> </div>'
 #    冒泡背景
