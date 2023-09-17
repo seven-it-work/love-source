@@ -17,6 +17,7 @@ menu:
     标签: /tags/ || fas fa-tags
   生活清单||iconfont icon-24gl-clipboardChecklist:
     相册清单: /gallery/ || fas fa-images
+    待办清单: /my-todo/ || iconfont icon--to-do
     音乐清单: /music/ || fas fa-music
     电影清单: /movies/ || fas fa-video
     游戏清单: /games/ || iconfont icon-youxi
@@ -915,7 +916,7 @@ css_prefix: true
 inject:
   head:
    - <link rel="stylesheet" href="/css/modify.css">
-   - <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4235380_o5xs1v32ql.css">
+   - <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4235380_i5lo6ksrj89.css">
   bottom:
     - '<div class="aplayer no-destroy" data-id="464916877" data-server="netease" data-type="song" data-fixed="true" data-autoplay="true"> </div>'
 #    冒泡背景

@@ -162,7 +162,7 @@ electric_clock:
     type: class
     name: sticky_layout
     index: 0
-  loading: /img/loading.gif #加载动画自定义
+  loading: /img/giphy.gif #加载动画自定义
   clock_js: /js/clock.js
   clock_css: /css/clock.css
   weather_city_zh: 成都
