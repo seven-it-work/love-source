@@ -16,20 +16,20 @@ var obsClient = new ObsClient({
 });
 // 使用访问OBS
 try {
-    console.log(11111)
-    obsClient.getObject({
-        Bucket : 'seven01',
-        Key : 't.json'
-    }, (err, result) => {
-        if(err){
-            console.log('Error-->' + err);
-        }else{
-            console.log('Status-->' + result.CommonMsg.Status);
-            if(result.CommonMsg.Status < 300 && result.InterfaceResult){
-                console.log(result.InterfaceResult.Content.toString());
-            }
-        }
-    });
+    // console.log(11111)
+    // obsClient.getObject({
+    //     Bucket : 'seven01',
+    //     Key : 't.json'
+    // }, (err, result) => {
+    //     if(err){
+    //         console.log('Error-->' + err);
+    //     }else{
+    //         console.log('Status-->' + result.CommonMsg.Status);
+    //         if(result.CommonMsg.Status < 300 && result.InterfaceResult){
+    //             console.log(result.InterfaceResult.Content.toString());
+    //         }
+    //     }
+    // });
 }catch (e){
     console.log(e)
 }
