@@ -1,4 +1,5 @@
 // https://pv.sohu.com/cityjson?ie=utf-8 的结果解析
+console.log(11111111)
 let realIp = weather_city.en
 if (returnCitySN) {
     if (returnCitySN["cip"] !== '127.0.0.1') {

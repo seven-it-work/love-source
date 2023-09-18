@@ -33,7 +33,6 @@ try {
 }catch (e){
     console.log(e)
 }
-console.log(2222)
 
 // 关闭obsClient
 obsClient.close();
