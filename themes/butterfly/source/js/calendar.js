@@ -1,4 +1,3 @@
-console.log('初始化')
 function renderingTips(events) {
     if (events && events.events && events.events.length > 0) {
         let detailHtml = ''
