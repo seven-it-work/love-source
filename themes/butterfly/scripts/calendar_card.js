@@ -13,20 +13,16 @@ hexo.extend.filter.register('after_generate', function (locals) {
         // 集体声明配置项
         const data = {}
         // 渲染页面
-        const temple_html_text = `
-<div class="calendar-card-class">
-    <div class="drop-shadow">
-        <div class="glass"></div>
-        <div id="calendar_card"></div>
-    </div>
-</div>`
+        const temple_html_text = '`\n<div class="card-widget calendar-card-class">\n    <div class="drop-shadow">\n        <div class="glass"></div>\n        <div id="calendar_card"></div>\n    </div>\n</div>`'
         //cdn资源声明
         //样式资源
         const css_text = `
     <link rel="stylesheet" type="text/css"
           href="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.min.css"/>
+    <link  rel="stylesheet" type="text/css" href="/css/calendar_card.css">
     <script src="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.js"></script>
-    <script src="https://unpkg.com/js-year-calendar@2.0.0/locales/js-year-calendar.zh-CN.js"></script>`
+    <script src="https://unpkg.com/js-year-calendar@2.0.0/locales/js-year-calendar.zh-CN.js"></script>
+`
         //脚本资源
         const js_text = `<script data-pjax src="/js/calendar.js"></script>`
         // 挂载的位置

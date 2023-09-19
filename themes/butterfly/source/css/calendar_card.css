@@ -1,92 +1,183 @@
-#calendar a {
-    text-decoration: none;
+.calendar .calendar-header table th {
+    font-size: 22px;
+    padding: 5px;
+    cursor: pointer;
 }
-.cal-head {
-    position: relative;
-    height: 20px;
-    padding: 8px 6px 2px 6px;
-    margin-bottom: 15px;
-}
-.cal-prev, .cal-next {
-    position: absolute;
-    top: 9px;
-    width: 9px;
-    height: 10px;
-    padding: 3px 4px;
-    border: 1px solid transparent;
-    color: #333;
-    outline: 0;
-}
-.cal-prev {
-    left: 8px;
-}
-.cal-prev:before {
-    border-right: 9px solid #333;
-}
-.cal-next {
-    right: 8px;
-}
-.cal-next:before {
-    border-left: 9px solid #333;
-}
-.cal-prev:before, .cal-next:before {
-    content: '';
-    display: block;
-    width: 0;
-    height: 0;
-    border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent;
-}
-.cal-title {
-    width: 120px;
-    margin: 0 auto;
-    color: #333;
-    font: bold 14px/18px Arial;
-    text-align: center;
-}
-.cal-title a {
-    border: 1px solid transparent;
-    color: color-theme;
-}
-.cal, .cal th, .cal td {
-    border: none;
-}
-.cal {
-    border-collapse: collapse;
-    border-spacing: 0;
-    table-layout: fixed;
+
+@import url("https://fonts.googleapis.com/css?family=Rajdhani:300&display=swap");
+.calendar-card-class, body, html {
+    height: 100%;
     width: 100%;
     margin: 0;
-}
-.cal th {
-    background: #fff;
-    color: #000;
-    font-weight: 900 !important;
-}
-.cal tbody a {
-    background-color: #42d3d8;
-    color: #fff;
-    display: block;
-    font-weight: 700;
-}
-.cal tbody .cal-today {
-    background-color: #eaf4f3;
-    color: #26a2a4;
-}
-.cal .cal-gray {
-    color: #ddd;
-}
-.cal th, .cal td {
-    font-weight: normal;
-    line-height: 2.5625;
     padding: 0;
-    text-align: center;
 }
-.cal-title a:hover, .cal-prev:hover, .cal-next:hover, .cal .cal-foot:hover, .cal .cal-foot:focus {
-    cursor: pointer;
+
+.calendar-card-class {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/jess-harding-lqT6NAmTaiY-unsplash.jpg");
+    background-size: cover;
+    background-position: center;
+    font-family: "Rajdhani", sans-serif;
 }
-.cal tbody a:hover, .cal tbody a:focus {
-    background-color: #a1e4e6;
+
+
+.glass {
+    height: 300px;
+    width: 300px;
+    background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/jess-harding-lqT6NAmTaiY-unsplash.jpg");
+    background-size: cover;
+    background-position: center;
+    -webkit-clip-path: inset(10em);
+    clip-path: inset(10em);
+    filter: blur(20px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.drop-shadow {
+    height: 100%;
+    width: 100%;
+    filter: drop-shadow(0px 20px 10px rgba(0, 0, 0, 0.3));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.drop-shadow:before {
+    display: block;
+    content: "";
+    position: absolute;
+    top: 10em;
+    height: calc(100% - 20em);
+    width: calc(100% - 20em);
+    border-top: 2px solid rgba(225, 225, 225, 0.2);
+    border-left: 1px solid rgba(225, 225, 225, 0.1);
+    border-right: 1px solid rgba(225, 225, 225, 0.3);
+    z-index: 2;
+}
+
+.drop-shadow > #calendar_card {
+    position: absolute;
+    z-index: 5;
+    color: white;
+    font-size: 4em;
+    padding-left: 0.375em;
+}
+
+@media (max-width: 980px) {
+    .glass {
+        -webkit-clip-path: inset(5em);
+        clip-path: inset(5em);
+    }
+
+    .drop-shadow:before {
+        top: 5em;
+        width: calc(100% - 10em);
+    }
+
+    .drop-shadow > span {
+        font-size: 4em;
+    }
+}
+
+@media (max-width: 640px) {
+    .drop-shadow > span {
+        font-size: 2em;
+    }
+}
+.calendar {
+    overflow: visible;
+}
+
+.day {
+    position: relative;
+}
+.popover *{
+    width: 100%;
+}
+.qs .popover {
+    background-color: rgba(0, 0, 0, 0.85);
+    border-radius: 5px;
+    bottom: 30px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
     color: #fff;
-    cursor: pointer;
+    display: none;
+    font-size: 12px;
+    font-family: 'Helvetica', sans-serif;
+    left: -45px;
+    padding: 7px 10px;
+    position: absolute;
+    min-width: 100px;
+    z-index: 999;
+}
+
+.qs .popover:before {
+    border-top: 7px solid rgba(0, 0, 0, 0.85);
+    border-right: 7px solid transparent;
+    border-left: 7px solid transparent;
+    bottom: -7px;
+    content: '';
+    display: block;
+    left: 50%;
+    margin-left: -7px;
+    position: absolute;
+}
+
+.qs:hover .popover {
+    display: block;
+    -webkit-animation: fade-in .3s linear 1, move-up .3s linear 1;
+    -moz-animation: fade-in .3s linear 1, move-up .3s linear 1;
+    -ms-animation: fade-in .3s linear 1, move-up .3s linear 1;
+}
+
+@-webkit-keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@-moz-keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@-ms-keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@-webkit-keyframes move-up {
+    from {
+        bottom: 30px;
+    }
+    to {
+        bottom: 42px;
+    }
+}
+@-moz-keyframes move-up {
+    from {
+        bottom: 30px;
+    }
+    to {
+        bottom: 42px;
+    }
+}
+@-ms-keyframes move-up {
+    from {
+        bottom: 30px;
+    }
+    to {
+        bottom: 42px;
+    }
 }
