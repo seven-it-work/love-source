@@ -22,7 +22,30 @@
         language: 'zh-CN',
         startDate: new Date(),
         numberMonthsDisplayed: 1,
+        displayHeader: true,
+        displayWeekNumber: true,
+        clickDay: function(e) {
+            // 待完成，点击事件后，渲染html
+            console.log(e)
+        },
+        dataSource:[
+            {
+                startDate: new Date(2023, 8, 4),
+                endDate: new Date(2023, 8, 20),
+                dataInfo:111
+            },
+            {
+                startDate: new Date(2023, 8, 4),
+                endDate: new Date(2023, 10, 20),
+                dataInfo:222
+            }
+        ]
     })
+    // 支持年的调整
+    // const elementById = document.getElementById("calendar_card");
+    // const elementsByTagName = elementById.getElementsByClassName("calendar-header")[0].getElementsByTagName("table");
+    // console.log(elementsByTagName[0].innerHTML)
+    // elementsByTagName[0].innerHTML=`<th><span>‹‹</span></th>${elementsByTagName[0].innerHTML}<th><span>››</span></th>`
     const imgSr = ['https://pic.616pic.com/bg_w1180/00/09/75/6eISyvLqRL.jpg!/fh/300', 'https://pic.616pic.com/bg_w1180/00/01/91/NvUeblaOUi.jpg!/fh/300']
     self.setInterval("changeBackgroundImage()", 5000);
     let index = 0;
@@ -39,6 +62,12 @@
 </script>
 </body>
 <style>
+    .calendar .calendar-header table th {
+        font-size: 22px;
+        padding: 5px;
+        cursor: pointer;
+    }
+
     @import url("https://fonts.googleapis.com/css?family=Rajdhani:300&display=swap");
     .calendar-card-class, body, html {
         height: 100%;
