@@ -13,15 +13,22 @@ hexo.extend.filter.register('after_generate', function (locals) {
         // 集体声明配置项
         const data = {}
         // 渲染页面
-        const temple_html_text = pug.renderFile(path.join(__dirname, '../layout/calendar_card.pug'), data)
+        const temple_html_text = `
+<div class="calendar-card-class">
+    <div class="drop-shadow">
+        <div class="glass"></div>
+        <div id="calendar_card"></div>
+    </div>
+</div>`
         //cdn资源声明
         //样式资源
-        const css_text = `<link rel="stylesheet" href="/css/calendar_card.css" />`
+        const css_text = `
+    <link rel="stylesheet" type="text/css"
+          href="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.min.css"/>
+    <script src="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.js"></script>
+    <script src="https://unpkg.com/js-year-calendar@2.0.0/locales/js-year-calendar.zh-CN.js"></script>`
         //脚本资源
-        const js_text = `<script src="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.min.js"></script>
-<script src="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.umd.min.js"></script>
-<script src="https://unpkg.com/browse/js-year-calendar@2.0.0/locales/js-year-calendar.zh-CN.js"></script>
-                  <script data-pjax src="/js/calendar.js"></script>`
+        const js_text = `<script data-pjax src="/js/calendar.js"></script>`
         // 挂载的位置
         let get_layout = `document.getElementsByClassName('sticky_layout')[0]`
         //注入容器声明
@@ -29,7 +36,7 @@ hexo.extend.filter.register('after_generate', function (locals) {
         var user_info_js = `<script data-pjax>
           function ${pluginname}_injector_config(){
             var parent_div_git = ${get_layout};
-            var item_html = '${temple_html_text}';
+            var item_html = ${temple_html_text};
             console.log('已挂载${pluginname}')
             parent_div_git.insertAdjacentHTML("afterbegin",item_html)
             }
