@@ -4,22 +4,125 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-<!--    <link rel="stylesheet" type="text/css"-->
-<!--        href="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.min.css" />-->
+    <link rel="stylesheet" type="text/css"
+          href="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.min.css"/>
     <script src="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.js"></script>
     <script src="https://unpkg.com/js-year-calendar@2.0.0/locales/js-year-calendar.zh-CN.js"></script>
 </head>
 
 <body>
-    <div id="calendar" class="my_calendar"></div>
-    <script>
-        new Calendar('#calendar', {
-            language: 'zh-CN',
-            startDate: new Date(),
-            numberMonthsDisplayed: 1,
-        })
-    </script>
+<div class="calendar-card-class">
+    <div class="drop-shadow">
+        <div class="glass"></div>
+        <div id="calendar_card"></div>
+    </div>
+</div>
+<script>
+    new Calendar('#calendar_card', {
+        language: 'zh-CN',
+        startDate: new Date(),
+        numberMonthsDisplayed: 1,
+    })
+    const imgSr = ['https://pic.616pic.com/bg_w1180/00/09/75/6eISyvLqRL.jpg!/fh/300', 'https://pic.616pic.com/bg_w1180/00/01/91/NvUeblaOUi.jpg!/fh/300']
+    self.setInterval("changeBackgroundImage()", 5000);
+    let index = 0;
+    function changeBackgroundImage() {
+        const elementById1 = document.getElementsByClassName('calendar-card-class')[0];
+        const elementById2 = document.getElementsByClassName('glass')[0];
+        index++;
+        index = index % imgSr.length
+        elementById1.style.backgroundImage = `url('${imgSr[index]}')`
+        elementById2.style.backgroundImage = `url('${imgSr[index]}')`
+    }
 
+    changeBackgroundImage();
+</script>
 </body>
+<style>
+    @import url("https://fonts.googleapis.com/css?family=Rajdhani:300&display=swap");
+    .calendar-card-class, body, html {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .calendar-card-class {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/jess-harding-lqT6NAmTaiY-unsplash.jpg");
+        background-size: cover;
+        background-position: center;
+        font-family: "Rajdhani", sans-serif;
+    }
+
+
+    .glass {
+        height: 100%;
+        width: 100%;
+        background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/jess-harding-lqT6NAmTaiY-unsplash.jpg");
+        background-size: cover;
+        background-position: center;
+        -webkit-clip-path: inset(10em);
+        clip-path: inset(10em);
+        filter: blur(20px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .drop-shadow {
+        height: 100%;
+        width: 100%;
+        filter: drop-shadow(0px 20px 10px rgba(0, 0, 0, 0.3));
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .drop-shadow:before {
+        display: block;
+        content: "";
+        position: absolute;
+        top: 10em;
+        height: calc(100% - 20em);
+        width: calc(100% - 20em);
+        border-top: 2px solid rgba(225, 225, 225, 0.2);
+        border-left: 1px solid rgba(225, 225, 225, 0.1);
+        border-right: 1px solid rgba(225, 225, 225, 0.3);
+        z-index: 2;
+    }
+
+    .drop-shadow > #calendar_card {
+        position: absolute;
+        z-index: 5;
+        color: white;
+        font-size: 4em;
+        padding-left: 0.375em;
+    }
+
+    @media (max-width: 980px) {
+        .glass {
+            -webkit-clip-path: inset(5em);
+            clip-path: inset(5em);
+        }
+
+        .drop-shadow:before {
+            top: 5em;
+            width: calc(100% - 10em);
+        }
+
+        .drop-shadow > span {
+            font-size: 4em;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .drop-shadow > span {
+            font-size: 2em;
+        }
+    }
+</style>
 
 </html>
