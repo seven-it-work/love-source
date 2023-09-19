@@ -18,37 +18,57 @@
     </div>
 </div>
 <script>
+    function renderingTips(events) {
+        if (events && events.events && events.events.length > 0) {
+            let detailHtml = ''
+            const detailHtmlList = events.events.filter(jsDateObjInfo => jsDateObjInfo && jsDateObjInfo.detailHtml);
+            if (detailHtmlList.length === 1) {
+                detailHtml = detailHtmlList[0].detailHtml
+            } else {
+                for (let i = 0; i < detailHtmlList.length; i++) {
+                    detailHtml += `<div>记录${i + 1}</div>`
+                    detailHtml += detailHtmlList[i].detailHtml
+                }
+            }
+            // 鼠标悬浮
+            const elementsByClassName = events.element;
+            if (!elementsByClassName.innerHTML.includes('popover above')) {
+                elementsByClassName.innerHTML = `<span class="qs">${elementsByClassName.innerHTML}<span class="popover above">${detailHtml}</span></span>`
+            }
+        }
+    }
     new Calendar('#calendar_card', {
         language: 'zh-CN',
         startDate: new Date(),
         numberMonthsDisplayed: 1,
         displayHeader: true,
         displayWeekNumber: true,
-        clickDay: function(e) {
-            // 待完成，点击事件后，渲染html
-            console.log(e)
+        clickDay: function (events) {
+            renderingTips(events)
         },
-        dataSource:[
+        dataSource: [
             {
                 startDate: new Date(2023, 8, 4),
                 endDate: new Date(2023, 8, 20),
-                dataInfo:111
+                detailHtml: `<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/jess-harding-lqT6NAmTaiY-unsplash.jpg"></img>`,
             },
             {
                 startDate: new Date(2023, 8, 4),
                 endDate: new Date(2023, 10, 20),
-                dataInfo:222
+                detailHtml: 222,
             }
-        ]
+        ],
+        customDataSourceRenderer: (events) => {
+            console.log(events)
+        },
+        mouseOnDay: (events) => {
+            renderingTips(events)
+        }
     })
-    // 支持年的调整
-    // const elementById = document.getElementById("calendar_card");
-    // const elementsByTagName = elementById.getElementsByClassName("calendar-header")[0].getElementsByTagName("table");
-    // console.log(elementsByTagName[0].innerHTML)
-    // elementsByTagName[0].innerHTML=`<th><span>‹‹</span></th>${elementsByTagName[0].innerHTML}<th><span>››</span></th>`
     const imgSr = ['https://pic.616pic.com/bg_w1180/00/09/75/6eISyvLqRL.jpg!/fh/300', 'https://pic.616pic.com/bg_w1180/00/01/91/NvUeblaOUi.jpg!/fh/300']
     self.setInterval("changeBackgroundImage()", 5000);
     let index = 0;
+
     function changeBackgroundImage() {
         const elementById1 = document.getElementsByClassName('calendar-card-class')[0];
         const elementById2 = document.getElementsByClassName('glass')[0];
@@ -57,7 +77,6 @@
         elementById1.style.backgroundImage = `url('${imgSr[index]}')`
         elementById2.style.backgroundImage = `url('${imgSr[index]}')`
     }
-
     changeBackgroundImage();
 </script>
 </body>
@@ -88,8 +107,8 @@
 
 
     .glass {
-        height: 100%;
-        width: 100%;
+        height: 300px;
+        width: 300px;
         background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/jess-harding-lqT6NAmTaiY-unsplash.jpg");
         background-size: cover;
         background-position: center;
@@ -152,6 +171,99 @@
             font-size: 2em;
         }
     }
-</style>
+    .calendar {
+        overflow: visible;
+    }
 
+    .day {
+        position: relative;
+    }
+    .popover *{
+        width: 100%;
+    }
+    .qs .popover {
+        background-color: rgba(0, 0, 0, 0.85);
+        border-radius: 5px;
+        bottom: 30px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+        color: #fff;
+        display: none;
+        font-size: 12px;
+        font-family: 'Helvetica', sans-serif;
+        left: -45px;
+        padding: 7px 10px;
+        position: absolute;
+        min-width: 100px;
+        z-index: 999;
+    }
+
+    .qs .popover:before {
+        border-top: 7px solid rgba(0, 0, 0, 0.85);
+        border-right: 7px solid transparent;
+        border-left: 7px solid transparent;
+        bottom: -7px;
+        content: '';
+        display: block;
+        left: 50%;
+        margin-left: -7px;
+        position: absolute;
+    }
+
+    .qs:hover .popover {
+        display: block;
+        -webkit-animation: fade-in .3s linear 1, move-up .3s linear 1;
+        -moz-animation: fade-in .3s linear 1, move-up .3s linear 1;
+        -ms-animation: fade-in .3s linear 1, move-up .3s linear 1;
+    }
+
+    @-webkit-keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    @-moz-keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    @-ms-keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    @-webkit-keyframes move-up {
+        from {
+            bottom: 30px;
+        }
+        to {
+            bottom: 42px;
+        }
+    }
+    @-moz-keyframes move-up {
+        from {
+            bottom: 30px;
+        }
+        to {
+            bottom: 42px;
+        }
+    }
+    @-ms-keyframes move-up {
+        from {
+            bottom: 30px;
+        }
+        to {
+            bottom: 42px;
+        }
+    }
+
+</style>
 </html>
