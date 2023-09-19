@@ -76,8 +76,12 @@ if (localStorageWeather && localStorageWeather.length>=4){
     fetch('https://wttr.in/' + realIp + '?format=%l,%c,%t,%h').then(res => res.text()).then(
         data => {
             const wttrInfo = data.split(",");
-            setWithExpires(realIp,JSON.stringify(wttrInfo),1000*60*60*12)
-            renderClock(wttrInfo);
+            if (wttrInfo.length!==4){
+                console.error("请求错误")
+            }else {
+                setWithExpires(realIp,JSON.stringify(wttrInfo),1000*60*60*12)
+                renderClock(wttrInfo);
+            }
         }
     )
 }
