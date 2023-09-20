@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="wrapper">
+    111
+</div>
+
+</body>
+</html>
+<script>
+    var text = ``
+    const parser = new DOMParser();
+    const documentInfo = parser.parseFromString(text, "text/html");
+
+    document.body.appendChild(documentInfo.getElementsByTagName("div").item(0))
+    let styleTextContent = documentInfo.getElementsByTagName("style")[0]
+    for (let i = 1; i < documentInfo.getElementsByTagName("style").length; i++) {
+        documentInfo.getElementsByTagName("style")[0].textContent += documentInfo.getElementsByTagName("style").item(i).textContent
+    }
+    document.body.appendChild(styleTextContent)
+
+    let callBackFunc = undefined
+    for (let i = documentInfo.scripts.length - 1; i >= 0; i--) {
+        if (documentInfo.scripts[i].src) {
+            if (!callBackFunc) {
+                callBackFunc = () => {
+                    loadScript(documentInfo.scripts[i].src)
+                }
+            } else {
+                const newCallBackFunc = callBackFunc
+                callBackFunc = () => {
+                    loadScript(documentInfo.scripts[i].src, newCallBackFunc)
+                }
+            }
+        } else {
+            if (!callBackFunc) {
+                callBackFunc = () => {
+                    const scriptReload = document.createElement('script');
+                    scriptReload.text = documentInfo.scripts[i].text
+                    document.body.append(scriptReload)
+                }
+            } else {
+                const newCallBackFunc = callBackFunc
+                callBackFunc = () => {
+                    const scriptReload = document.createElement('script');
+                    scriptReload.text = documentInfo.scripts[i].text
+                    document.body.append(scriptReload)
+                    loadScript(undefined, newCallBackFunc)
+                }
+            }
+
+        }
+    }
+    callBackFunc()
+
+    function loadScript(url, callback) {
+        if (!url) {
+            if (callback) {
+                callback()
+            }
+        }
+        let script = document.createElement('script');
+        if (script.readyState) { // IE
+            script.onreadystatechange = function () {
+                if (script.readyState === 'loaded' || script.readyState === 'complete') {
+                    script.onreadystatechange = null;
+                    if (callback) {
+                        callback();
+                    }
+                }
+            }
+        } else { // 其他浏览器
+            script.onload = function () {
+                if (callback) {
+                    callback();
+                }
+            }
+        }
+        script.src = url;
+        document.body.append(script)
+    }
+</script>
