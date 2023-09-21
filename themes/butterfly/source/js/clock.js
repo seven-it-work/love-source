@@ -1,11 +1,17 @@
-// https://pv.sohu.com/cityjson?ie=utf-8 的结果解析
-console.log(11111111)
 let realIp = weather_city.en
+// https://pv.sohu.com/cityjson?ie=utf-8 的结果解析
 if (returnCitySN) {
     if (returnCitySN["cip"] !== '127.0.0.1') {
         realIp = returnCitySN["cip"]
     }
 }
+// http://whois.pconline.com.cn/ipJson.jsp 的解析结果
+if (whoisIpInfo){
+    if (whoisIpInfo["ip"] !== '127.0.0.1') {
+        realIp = whoisIpInfo["ip"]
+    }
+}
+
 // 缓存工具
 // 存储数据
 function setWithExpires(key, value, expires) {
@@ -23,11 +29,12 @@ function getWithExpires(key) {
         return decodeURI(arr[2]);
     }
 }
+
 // 缓存
 const localStorageWeather = getWithExpires(realIp);
-if (localStorageWeather && localStorageWeather.length>=4){
+if (localStorageWeather && localStorageWeather.length >= 4) {
     renderClock(JSON.parse(localStorageWeather))
-}else {
+} else {
     /**
      *     c    Weather condition,
      *     C    Weather condition textual name,
@@ -76,10 +83,10 @@ if (localStorageWeather && localStorageWeather.length>=4){
     fetch('https://wttr.in/' + realIp + '?format=%l,%c,%t,%h').then(res => res.text()).then(
         data => {
             const wttrInfo = data.split(",");
-            if (wttrInfo.length!==4){
+            if (wttrInfo.length !== 4) {
                 console.error("请求错误")
-            }else {
-                setWithExpires(realIp,JSON.stringify(wttrInfo),1000*60*60*12)
+            } else {
+                setWithExpires(realIp, JSON.stringify(wttrInfo), 1000 * 60 * 60 * 12)
                 renderClock(wttrInfo);
             }
         }
