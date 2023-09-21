@@ -6,7 +6,6 @@
     <script disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
-    <script src="password.js"></script>
 </head>
 <body>
 <div>123</div>
@@ -66,13 +65,11 @@
 
         function password(passwordStr) {
             let count = 1;
-            const innerHTML = document.documentElement.innerHTML;
             let input = prompt('请输入密码：', '');
             while (count < 3) {
                 if (input + "" === passwordStr + "") {
                     const passwordEncrypt = encrypt(passwordStr, userMd5Key);
                     setCookie(userMd5Key, passwordEncrypt, 7 * 24 * 60 * 60 * 1000)
-                    document.documentElement.innerHTML = (innerHTML)
                     return
                 }
                 count += 1;
