@@ -16,7 +16,6 @@
     "cheerio": "^1.0.0-rc.12",
     "esdk-obs-nodejs": "^3.21.6",
     "hexo": "^6.3.0",
-    "hexo-blog-encrypt": "^3.1.9",
     "hexo-douban": "^2.2.3",
     "hexo-generator-archive": "^2.0.0",
     "hexo-generator-category": "^2.0.0",

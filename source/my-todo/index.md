@@ -987,6 +987,9 @@ date: 2023-09-16 18:05:29
 </style>
 <script src="https://gosspublic.alicdn.com/aliyun-oss-sdk-6.18.0.min.js"></script>
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
 <div id="app">
     <div class="top">
         <header class="header">
@@ -1107,6 +1110,94 @@ date: 2023-09-16 18:05:29
                                         one-link-mark="yes">nana-like</a></footer>
     </div>
 </div>
+<script>
+    const userKey = 'test'
+    const userPassword = 'userPassword'
+    const errorUrl='/'
+    passwordCheck(userKey,userPassword,errorUrl);
+
+    // js 加密https://www.jsjiami.com/
+    // 字符串 加密https://www.jsjiami.com/
+    /**
+     *  disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool'
+     *  src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"
+     *  src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"
+     * @param userKey
+     * @param userPassword
+     * @param errorUrl
+     */
+    function passwordCheck(userKey,userPassword,errorUrl) {
+        DisableDevtool({
+            ondevtoolopen: (type) => {
+                const info = 'devtool opened!; type =' + type;
+                alert(info); // If you are worried about blocking the page, use console.warn(info); and open the console to view
+            },
+        })
+        const userMd5Key = md5(userKey)
+
+        // 加密实现
+        function encrypt(plaintext, key) {
+            const encrypted = CryptoJS.AES.encrypt(plaintext, key);
+            return encrypted.toString();
+        }
+
+        // 解密实现
+        function decrypt(ciphertext, key) {
+            return CryptoJS.AES.decrypt(ciphertext, key).toString(CryptoJS.enc.Utf8);
+        }
+
+
+        function setCookie(cname, cvalue, exTime) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exTime));
+            const expires = "expires=" + d.toGMTString();
+            document.cookie = cname + "=" + cvalue + "; " + expires;
+        }
+
+        function getCookie(cname) {
+            const name = cname + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                const c = ca[i].trim();
+                if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+            }
+            return "";
+        }
+
+        function password(passwordStr) {
+            let count = 1;
+            let input = prompt('请输入密码：', '');
+            while (count < 3) {
+                if (input + "" === passwordStr + "") {
+                    const passwordEncrypt = encrypt(passwordStr, userMd5Key);
+                    setCookie(userMd5Key, passwordEncrypt, 7 * 24 * 60 * 60 * 1000)
+                    return
+                }
+                count += 1;
+                input = prompt(`密码错误！你还有${4 - count}次机会请重新输入:`);
+                if (input !== password && count >= 3) {
+                    let waitTime = getCookie(userMd5Key+"_t") || 1;
+                    if (waitTime){
+                        waitTime = Number.parseInt(waitTime+"") * 2
+                    }
+                    setCookie(userMd5Key+"_t", waitTime, waitTime * 60 * 1000)
+                    window.location.href = errorUrl
+                    alert(`密码错误，请${waitTime}分钟后重试`)
+                    return
+                }
+            }
+        }
+        if (getCookie(userMd5Key+"_t")){
+            window.location.href = errorUrl
+            alert(`请等待，不要试图破解`)
+            return
+        }
+        const cookie = getCookie(userMd5Key);
+        if (!cookie || decrypt(cookie, userMd5Key) !== userPassword) {
+            password(userPassword)
+        }
+    }
+</script>
 <script>
     function getUuid() {
         if (typeof crypto === 'object') {
