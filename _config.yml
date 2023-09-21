@@ -167,3 +167,4 @@ electric_clock:
   clock_css: /css/clock.css
   weather_city_zh: 成都
   weather_city_en: ChengDu
+  ip_api: http://whois.pconline.com.cn/ipJson.jsp

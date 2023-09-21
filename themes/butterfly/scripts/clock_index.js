@@ -36,6 +36,13 @@ hexo.extend.filter.register('after_generate', function (locals) {
   const css_text = `<link rel="stylesheet" href="${data.clock_css}" />`
     //脚本资源
   const js_text = `
+                  <script>
+                        var returnCitySN=undefined
+                        var whoisIpInfo=undefined
+                        var IPCallBack=(ipInfo)=>{
+                            whoisIpInfo=ipInfo
+                        }
+                  </script>
                   <script>var weather_city=JSON.parse('${JSON.stringify(data.weather_city)}');</script>
                   <script src="${data.ip_api}"></script>
                   <script data-pjax src="${data.clock_js}"></script>`
