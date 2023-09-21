@@ -4,55 +4,90 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+    <script src="password.js"></script>
 </head>
 <body>
 <div>123</div>
 <script>
+    const userKey = 'test'
+    const userPassword = 'userPassword'
+    const errorUrl='https://www.baidu.com'
+    passwordCheck(userKey,userPassword,errorUrl);
+
     // js 加密https://www.jsjiami.com/
-    function setCookie(cname, cvalue, exdays) {
-        const d = new Date();
-        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-        const expires = "expires=" + d.toGMTString();
-        document.cookie = cname + "=" + cvalue + "; " + expires;
-    }
+    // 字符串 加密https://www.jsjiami.com/
+    /**
+     *  disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool'
+     *  src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"
+     *  src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"
+     * @param userKey
+     * @param userPassword
+     * @param errorUrl
+     */
+    function passwordCheck(userKey,userPassword,errorUrl) {
+        DisableDevtool({
+            ondevtoolopen: (type) => {
+                const info = 'devtool opened!; type =' + type;
+                alert(info); // If you are worried about blocking the page, use console.warn(info); and open the console to view
+            },
+        })
+        const userMd5Key = md5(userKey)
 
-    function getCookie(cname) {
-        const name = cname + "=";
-        const ca = document.cookie.split(';');
-        for (let i = 0; i < ca.length; i++) {
-            const c = ca[i].trim();
-            if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+        // 加密实现
+        function encrypt(plaintext, key) {
+            const encrypted = CryptoJS.AES.encrypt(plaintext, key);
+            return encrypted.toString();
         }
-        return "";
-    }
 
-    function password(passwordStr) {
-        var count = 1;
-        const innerHTML = document.documentElement.innerHTML;
-        let input = prompt('请输入密码：', '');
-        while (count < 3) {
-            if (input + "" === passwordStr + "") {
-                console.log('密码正确')
-                setCookie('md5', 'md5', 1)
-                document.documentElement.innerHTML=(innerHTML)
-                return
+        // 解密实现
+        function decrypt(ciphertext, key) {
+            return CryptoJS.AES.decrypt(ciphertext, key).toString(CryptoJS.enc.Utf8);
+        }
+
+
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + d.toGMTString();
+            document.cookie = cname + "=" + cvalue + "; " + expires;
+        }
+
+        function getCookie(cname) {
+            const name = cname + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                const c = ca[i].trim();
+                if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
             }
-            count += 1;
-            input = prompt('密码错误!请重新输入:');
-            if (input !== password && count >= 3) {
-                window.location.href='https://www.baidu.com'
-                alert("密码错误")
+            return "";
+        }
+
+        function password(passwordStr) {
+            var count = 1;
+            const innerHTML = document.documentElement.innerHTML;
+            let input = prompt('请输入密码：', '');
+            while (count < 3) {
+                if (input + "" === passwordStr + "") {
+                    const passwordEncrypt = encrypt(passwordStr, userMd5Key);
+                    setCookie(userMd5Key, passwordEncrypt, 1)
+                    document.documentElement.innerHTML = (innerHTML)
+                    return
+                }
+                count += 1;
+                input = prompt(`密码错误！你还有${4 - count}次机会请重新输入:`);
+                if (input !== password && count >= 3) {
+                    window.location.href = errorUrl
+                    alert("密码错误")
+                }
             }
         }
-    }
-    DisableDevtool({
-        ondevtoolopen: (type) => {
-            const info = 'devtool opened!; type =' + type;
-            alert(info); // If you are worried about blocking the page, use console.warn(info); and open the console to view
-        },
-    })
-    if (!getCookie('md5')) {
-        password(123)
+
+        const cookie = getCookie(userMd5Key);
+        if (!cookie || decrypt(cookie, userMd5Key) !== userPassword) {
+            password(userPassword)
+        }
     }
 </script>
 </body>
