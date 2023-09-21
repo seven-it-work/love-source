@@ -3,17 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool'></script>
+    <!--    <script disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool'></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
 </head>
 <body>
 <div>123</div>
 <script>
-    const userKey = 'test'
-    const userPassword = 'userPassword'
-    const errorUrl='https://www.baidu.com'
-    passwordCheck(userKey,userPassword,errorUrl);
+    var GLOBAL_CONSTANTS = {
+        '1734941c35ece2699cb424b6c227969c': '请输入密码：',
+        '73477d3bf6767bf1ceb9f455bb62aa7f': '密码错误！你还有',
+        'c69ab1a02ddc9e26733449f4dbe21d6f': '次机会请重新输入:',
+        '703a423b6e2c9feee29afd328ad4715c': '密码错误，请',
+        'a28ccc94d02e4d6fccf56113cc303815': '分钟后重试',
+        '29d312f339bea7d4c7b8ebeb11e0af87': '请等待，不要试图破解',
+    }
 
     // js 加密https://www.jsjiami.com/
     // 字符串 加密https://www.jsjiami.com/
@@ -25,13 +29,7 @@
      * @param userPassword
      * @param errorUrl
      */
-    function passwordCheck(userKey,userPassword,errorUrl) {
-        DisableDevtool({
-            ondevtoolopen: (type) => {
-                const info = 'devtool opened!; type =' + type;
-                alert(info); // If you are worried about blocking the page, use console.warn(info); and open the console to view
-            },
-        })
+    var PASSWORD_CHECK = (userKey, userPassword, errorUrl) => {
         const userMd5Key = md5(userKey)
 
         // 加密实现
@@ -65,7 +63,7 @@
 
         function password(passwordStr) {
             let count = 1;
-            let input = prompt('请输入密码：', '');
+            let input = prompt(GLOBAL_CONSTANTS['1734941c35ece2699cb424b6c227969c'], '');
             while (count < 3) {
                 if (input + "" === passwordStr + "") {
                     const passwordEncrypt = encrypt(passwordStr, userMd5Key);
@@ -73,22 +71,23 @@
                     return
                 }
                 count += 1;
-                input = prompt(`密码错误！你还有${4 - count}次机会请重新输入:`);
+                input = prompt(`${GLOBAL_CONSTANTS['73477d3bf6767bf1ceb9f455bb62aa7f']}${4 - count}${GLOBAL_CONSTANTS['c69ab1a02ddc9e26733449f4dbe21d6f']}`);
                 if (input !== password && count >= 3) {
-                    let waitTime = getCookie(userMd5Key+"_t") || 1;
-                    if (waitTime){
-                        waitTime = Number.parseInt(waitTime+"") * 2
+                    let waitTime = getCookie(userMd5Key + "_t") || 1;
+                    if (waitTime) {
+                        waitTime = Number.parseInt(waitTime + "") * 2
                     }
-                    setCookie(userMd5Key+"_t", waitTime, waitTime * 60 * 1000)
+                    setCookie(userMd5Key + "_t", waitTime, waitTime * 60 * 1000)
                     window.location.href = errorUrl
-                    alert(`密码错误，请${waitTime}分钟后重试`)
+                    alert(`${GLOBAL_CONSTANTS['703a423b6e2c9feee29afd328ad4715c']}${waitTime}${GLOBAL_CONSTANTS['a28ccc94d02e4d6fccf56113cc303815']}`)
                     return
                 }
             }
         }
-        if (getCookie(userMd5Key+"_t")){
+
+        if (getCookie(userMd5Key + "_t")) {
             window.location.href = errorUrl
-            alert(`请等待，不要试图破解`)
+            alert(GLOBAL_CONSTANTS['29d312f339bea7d4c7b8ebeb11e0af87'])
             return
         }
         const cookie = getCookie(userMd5Key);
@@ -96,6 +95,12 @@
             password(userPassword)
         }
     }
+
+
+    const userKey = 'test'
+    const userPassword = 'userPassword'
+    const errorUrl = 'https://www.baidu.com';
+    window.PASSWORD_CHECK(userKey, userPassword, errorUrl)
 </script>
 </body>
 </html>
