@@ -103,7 +103,7 @@ function renderClock(data) {
         var clock_box = document.getElementById('hexo_electric_clock');
         clock_box_html = `
           <div class="clock-row">
-            <span class="card-clock-ip">${returnCitySN["cip"]}</span>
+            <span class="card-clock-ip">${realIp}</span>
             <span class="card-clock-weather">${data[1]} ${data[2]}</span>
             <span class="card-clock-humidity">💧 ${data[3]}</span>
           </div>
