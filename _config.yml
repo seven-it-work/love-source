@@ -13,7 +13,7 @@ timezone: ''
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
+url: https://seven-it-work.github.io/love/
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -104,7 +104,9 @@ theme: butterfly
 deploy:
   type: 'git'
   repo: git@github.com:seven-it-work/love.git
-  brach: master
+  brach: gh-pages
+  url: https://seven-it-work.github.io/
+  root: /love/
 
 aplayer:
   enable: true

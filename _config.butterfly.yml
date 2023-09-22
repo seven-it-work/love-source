@@ -918,7 +918,7 @@ inject:
    - <link rel="stylesheet" href="/css/modify.css">
    - <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4235380_i5lo6ksrj89.css">
    - <script src="/js/constant.js"></script>
-   - <script disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool'></script>
+# - <script disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool'></script>
    - <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
    - <script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
    - <script src="/js/vue2.js"></script>
