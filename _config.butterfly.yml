@@ -58,13 +58,13 @@ avatar:
 disable_top_img: false
 
 # The banner image of home page
-index_img: https://seven-it-work.github.io/love/img/wedding/1.jpg
+index_img: http://gteam_seven.gitee.io/love/img/wedding/1.jpg
 
 # If the banner of page not setting, it will show the top_img
-default_top_img: https://seven-it-work.github.io/love/img/wedding/1.jpg
+default_top_img: http://gteam_seven.gitee.io/love/img/wedding/1.jpg
 
 # The banner image of archive page
-archive_img: https://seven-it-work.github.io/love/img/wedding/1.jpg
+archive_img: http://gteam_seven.gitee.io/love/img/wedding/1.jpg
 
 # If the banner of tag page not setting, it will show the top_img
 # note: tag page, not tags page (子標籤頁面的 top_img)
@@ -98,8 +98,8 @@ cover:
 
 # Replace Broken Images (替換無法顯示的圖片)
 error_img:
-  flink: https://seven-it-work.github.io/love/img/friend_404.gif
-  post_page: https://seven-it-work.github.io/love/img/404.jpg
+  flink: http://gteam_seven.gitee.io/love/img/friend_404.gif
+  post_page: http://gteam_seven.gitee.io/love/img/404.jpg
 
 # A simple 404 page
 error_404:
@@ -645,7 +645,7 @@ tag_ui: # 留空或 index
 # Website Background (設置網站背景)
 # can set it to color or image (可設置圖片 或者 顔色)
 # The formal of image: url(http://xxxxxx.com/xxx.jpg)
-background: url(https://seven-it-work.github.io/love/img/wedding/1.jpg)
+background: url(http://gteam_seven.gitee.io/love/img/wedding/1.jpg)
 
 # Footer Background
 footer_bg: transparent
@@ -915,19 +915,19 @@ css_prefix: true
 # 插入代码到头部 </head> 之前 和 底部 </body> 之前
 inject:
   head:
-   - <link rel="stylesheet" href="https://seven-it-work.github.io/love/css/modify.css">
+   - <link rel="stylesheet" href="http://gteam_seven.gitee.io/love/css/modify.css">
    - <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4235380_i5lo6ksrj89.css">
-   - <script src="https://seven-it-work.github.io/love/js/constant.js"></script>
+   - <script src="http://gteam_seven.gitee.io/love/js/constant.js"></script>
 # - <script disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool'></script>
    - <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
    - <script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
-   - <script src="https://seven-it-work.github.io/love/js/vue2.js"></script>
+   - <script src="http://gteam_seven.gitee.io/love/js/vue2.js"></script>
   bottom:
     - '<div class="aplayer no-destroy" data-id="464916877" data-server="netease" data-type="song" data-fixed="true" data-autoplay="true"> </div>'
 #    冒泡背景
     - <script defer src="https://cdn.jsdelivr.net/combine/npm/jquery@latest/dist/jquery.min.js,gh/weilining/jsdelivr/jquery/circlemagic/circlemagic.min.js,gh/weilining/jsdelivr@latest/jquery/circlemagic/butterflycirclemagic.js"></script>
 #    樱花
-    - <script src="https://seven-it-work.github.io/love/js/cherryBlossoms.js"></script>
+    - <script src="http://gteam_seven.gitee.io/love/js/cherryBlossoms.js"></script>
 
 # CDN
 # Don't modify the following settings unless you know how they work

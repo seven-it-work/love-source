@@ -13,7 +13,9 @@ timezone: ''
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: https://seven-it-work.github.io/love/
+url: http://gteam_seven.gitee.io/
+#url: https://seven-it-work.github.io/
+root: /love
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -103,10 +105,9 @@ theme: butterfly
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: 'git'
-  repo: git@github.com:seven-it-work/love.git
+  repo: git@gitee.com:GTeam_seven/love.git
+#  repo: git@github.com:seven-it-work/love.git
   brach: gh-pages
-  url: https://seven-it-work.github.io/
-  root: /love/
 
 aplayer:
   enable: true

@@ -16,7 +16,7 @@ hexo.extend.filter.register('after_generate', function (locals) {
         const temple_html_text = pug.renderFile(path.join(__dirname, '../layout/corgi_card.pug'), data)
         //cdn资源声明
         //样式资源
-        const css_text = `<link rel="stylesheet" href="https://seven-it-work.github.io/love/css/corgi_card.css" />`
+        const css_text = `<link rel="stylesheet" href="http://gteam_seven.gitee.io/love/css/corgi_card.css" />`
         //脚本资源
         const js_text = ``
         // 挂载的位置

@@ -19,12 +19,12 @@ hexo.extend.filter.register('after_generate', function (locals) {
         const css_text = `
     <link rel="stylesheet" type="text/css"
           href="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.min.css"/>
-    <link  rel="stylesheet" type="text/css" href="https://seven-it-work.github.io/love/css/calendar_card.css">
+    <link  rel="stylesheet" type="text/css" href="http://gteam_seven.gitee.io/love/css/calendar_card.css">
     <script src="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.js"></script>
     <script src="https://unpkg.com/js-year-calendar@2.0.0/locales/js-year-calendar.zh-CN.js"></script>
 `
         //脚本资源
-        const js_text = `<script data-pjax src="https://seven-it-work.github.io/love/js/calendar.js"></script>`
+        const js_text = `<script data-pjax src="http://gteam_seven.gitee.io/love/js/calendar.js"></script>`
         // 挂载的位置
         let get_layout = `document.getElementsByClassName('sticky_layout')[0]`
         //注入容器声明
