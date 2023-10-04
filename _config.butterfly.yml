@@ -22,6 +22,7 @@ menu:
     电影清单: /movies/ || fas fa-video
     游戏清单: /games/ || iconfont icon-youxi
     书单: /books/ || iconfont icon-ziliaoku
+    抽奖清单: /lottery/ || iconfont icon-ziliaoku
   纪念日: /red-letter-day/ || iconfont icon-jinianri
   足迹: /footprintMap/ || iconfont icon-qiandaozuji
   关于我们: /about/ || fas fa-heart
@@ -916,7 +917,7 @@ css_prefix: true
 inject:
   head:
    - <link rel="stylesheet" href="http://gteam_seven.gitee.io/love/css/modify.css">
-   - <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4235380_i5lo6ksrj89.css">
+   - <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4235380_sw1jbkqliu.css">
    - <script src="http://gteam_seven.gitee.io/love/js/constant.js"></script>
 # - <script disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool'></script>
    - <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
