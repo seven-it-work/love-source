@@ -41,6 +41,36 @@ date: 2023-09-14 19:49:59
                 "description": `<div>测试<a href="#">123</a></div>`,
                 "show":false
             },
+            {
+                "lat":18.675326,
+                "lon":110.364246,
+                "title":"神州岛",
+                "pinColor":"#ff0000",
+                "height":300,
+                "width":320,
+                "description": `<div>测试<a href="#">123</a></div>`,
+                "show":false
+            },
+            {
+                "lat":18.294968,
+                "lon":109.394405,
+                "title":"三亚",
+                "pinColor":"#ff0000",
+                "height":300,
+                "width":320,
+                "description": `<div>婚纱照<a href="#">123</a></div>`,
+                "show":false
+            },
+            {
+                "lat":37.505453,
+                "lon":105.196264,
+                "title":"中卫",
+                "pinColor":"#ff0000",
+                "height":300,
+                "width":320,
+                "description": `<div>婚纱照<a href="#">123</a></div>`,
+                "show":false
+            },
         ];
         //----------------------------------------------------
         //4. Switch infoboxs
