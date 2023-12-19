@@ -194,22 +194,32 @@ password: 123
         {
             text: '结婚纪念日',
             year: 2023,
-            dateInfo: '09-07'
-        },
-        {
-            text: '1',
-            year: 2022,
             dateInfo: '01-06'
         },
         {
-            text: '2',
+            text: '婚礼纪念日',
             year: 2023,
-            dateInfo: '07-06'
+            dateInfo: '04-09'
         },
         {
-            text: '2',
-            year: 2023,
-            dateInfo: '09-05'
+            text: '求婚纪念日',
+            year: 2022,
+            dateInfo: '12-24'
+        },
+        {
+            text: '八筒生日',
+            year: 2022,
+            dateInfo: '04-25'
+        },
+        {
+            text: '段美女生日',
+            year: 1998,
+            dateInfo: '10-11'
+        },
+        {
+            text: '易帅哥生日',
+            year: 1998,
+            dateInfo: '10-07'
         },
     ]
     let $progressList = document.getElementById("progressList");

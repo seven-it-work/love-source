@@ -71,6 +71,16 @@ date: 2023-09-14 19:49:59
                 "description": `<div>婚纱照<a href="#">123</a></div>`,
                 "show":false
             },
+            {
+                "lat":30.69095,
+                "lon":103.19520,
+                "title":"西宁雪山",
+                "pinColor":"#ff0000",
+                "height":300,
+                "width":320,
+                "description": `<div>婚纱照<a href="#">123</a></div>`,
+                "show":false
+            },
         ];
         //----------------------------------------------------
         //4. Switch infoboxs
