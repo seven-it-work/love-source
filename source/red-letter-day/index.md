@@ -221,6 +221,11 @@ password: 123
             year: 1998,
             dateInfo: '10-07'
         },
+        {
+            text: '安安生日',
+            year: 2024,
+            dateInfo: '01-08'
+        },
     ]
     let $progressList = document.getElementById("progressList");
     let result = ''
